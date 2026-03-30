@@ -57,6 +57,7 @@ public: // medium
   vector<vector<int>> path_sum_ii_q113(tree_node* root, int target);
   vector<int> lexicographical_numbers_q386(int n);
   vector<int> find_all_anagrams_in_a_string_q438(string s, string p);
+  int subarray_sum_equals_k_q560(vector<int>& nums, int k);
 public: // hard
   int binary_tree_maximum_path_sum_q124(tree_node* root);
 };
@@ -75,7 +76,6 @@ public:
 };
 
 
-/* */
 class set2 : public solutions<category::divide_and_conquer>
 {
 public:
@@ -87,14 +87,20 @@ public:
 };
 
 
-/* */
 class set3 : public solutions<category::backtracking>
 {
+public:
+
+public:
+  vector<vector<int>> permutations_q46(vector<int>& nums);
+  vector<vector<int>> subsets_q78(vector<int>& nums);
+  vector<string> letter_combinations_of_a_phone_number_q17(string digits);
+  vector<vector<int>> combination_sum_q39(vector<int>& candidates, int target);
+public:
 
 };
 
 
-/* */
 class set4 : public solutions<category::dynamic_programming>
 {
 public:
@@ -112,6 +118,12 @@ class set5 : public solutions<category::greedy>
 {
 public:
   int best_time_to_buy_and_sell_stock_q121(vector<int>& prices);
+public:
+  bool jump_game_q55(vector<int>& nums);
+  int jump_game_ii_q55(vector<int>& nums);
+  vector<int> partition_labels_q763(string s);
+public:
+
 };
 
 

@@ -277,6 +277,17 @@ vector<int> set0::find_all_anagrams_in_a_string_q438(string s, string p) {
 }
 
 
+int set0::subarray_sum_equals_k_q560(vector<int>& nums, int k) {
+  int i = 0, j = 0, sum = nums[i];
+  unordered_map<int, int> sums;
+  while (i < nums.size()) {
+    i++;
+    sum += nums[i];
+    sums.emplace();
+  }
+}
+
+
 std::pair<int, int> dfs_q124(set0::tree_node* n) {
   if (!n->left && !n->right) { return {n->val, n->val}; } 
   int f, s; // the first is connected with only current node, the second is finished connecting from left to n to right
@@ -409,6 +420,101 @@ bool set2::search_a_2d_matrix_q74(vector<vector<int>>& matrix, int target) {
 /* set three */
 
 
+void helper_q46(vector<int>& nums, vector<bool>& selected, vector<int>& temp, vector<vector<int>>& ret) {
+  if (temp.size() == nums.size()) {
+    ret.push_back(temp);
+    return;
+  };
+  for (int i = 0; i < nums.size(); ++i) {
+    if (!selected[i]) {
+      temp.push_back(nums[i]);
+      selected[i] = true;
+      helper_q46(nums, selected, temp, ret);
+      selected[i] = false;
+      temp.pop_back();
+      return;
+    } else return;
+  }
+}
+vector<vector<int>> set3::permutations_q46(vector<int>& nums) {
+  vector<vector<int>> ret;
+  vector<bool> selected(nums.size(), false);
+  vector<int> temp(nums.size());
+  helper_q46(nums, selected, temp, ret);
+  return ret;
+}
+
+
+void helper_q78(vector<int>& nums, vector<vector<int>>& ret, vector<int>& path, int s) {
+  for (int i = s; i < nums.size(); ++i) {
+    path.push_back(nums[i]);
+    ret.push_back(path);
+    helper_q78(nums, ret, path, i + 1);
+    path.pop_back();
+  }
+}
+vector<vector<int>> set3::subsets_q78(vector<int>& nums) {
+  vector<vector<int>> ret;
+  vector<int> path;
+  int s = 0;
+  helper_q78(nums, ret, path, s);
+  return ret;
+}
+
+
+void helper_q17(string& digits, string& letters, vector<string>& ret, unordered_map<char, string>& data) {
+  if (digits.empty()) {
+    ret.push_back(letters);
+    return; 
+  }
+  auto iter = data.find(digits[0]);
+  for (char c : iter->second) {
+    letters.push_back(c);
+    std::string sub = digits.substr(1);
+    helper_q17(sub, letters, ret, data);
+    letters.pop_back();
+  }
+}
+vector<string> set3::letter_combinations_of_a_phone_number_q17(string digits) {
+  vector<string> ret;
+  unordered_map<char, string> data = {
+    {'2', "abc"},
+    {'3', "def"},
+    {'4', "ghi"},
+    {'5', "jkl"},
+    {'6', "mno"},
+    {'7', "pqrs"},
+    {'8', "tuv"},
+    {'9', "wxyz"}
+  };
+  string letters;
+  helper_q17(digits, letters, ret, data);
+  return ret;
+}
+
+
+void helper_q39(vector<vector<int>>& ret, vector<int>& candidates, int t, vector<int>& ctx, int s) {
+  if (!t) {
+    ret.push_back(ctx);
+    return;
+  }
+  for (int i = s; i < candidates.size(); ++i) {
+    if (candidates[i] <= t) {
+      ctx.push_back(candidates[i]);
+      helper_q39(ret, candidates, t - candidates[i], ctx, i);
+      ctx.pop_back();
+    } else return;
+  }
+}
+vector<vector<int>> set3::combination_sum_q39(vector<int>& candidates, int target) {
+  vector<vector<int>> ret;
+  vector<int> path;
+  int s = 0;
+  helper_q39(ret, candidates, target, path, s);
+  return ret;
+}
+
+
 /* set four */
 
 
@@ -422,6 +528,7 @@ int set4::climb_stairs_q70(int n) {
   }
   return b;
 }
+
 
 vector<vector<int>> set4::pascals_triangle_q118(int n) {
   vector<vector<int>> ret;
@@ -442,6 +549,7 @@ vector<vector<int>> set4::pascals_triangle_q118(int n) {
   }
 }
 
+
 int set4::house_robber_q198(vector<int>& nums) {
   if (nums.size() == 1) return nums[0];
   if (nums.size() == 2) return max(nums[0], nums[1]);
@@ -453,6 +561,7 @@ int set4::house_robber_q198(vector<int>& nums) {
   }
   return dp[nums.size() - 1];
 }
+
 
 int set4::perfect_squares_q279(int n) {
   if (n < 4) return n;
@@ -466,6 +575,7 @@ int set4::perfect_squares_q279(int n) {
   }
   return dp[n];
 }
+
 
 int set4::coin_change_q322(vector<int>& coins, int amount) {
   vector<vector<int>> dp(coins.size(), vector<int>(amount + 1, 0));
@@ -490,7 +600,64 @@ int set4::coin_change_q322(vector<int>& coins, int amount) {
 
 
 int set5::best_time_to_buy_and_sell_stock_q121(vector<int>& prices) {
-
+  int b = prices[0], p = 0;
+  for (int i = 0; i < prices.size(); ++i) {
+    b = min(b, prices[i]);
+    p = max(p, prices[i] - b);
+  }
+  return p;
 }
+
+
+bool set5::jump_game_q55(vector<int>& nums) {
+  if (nums.size() == 1) return true;
+  bool f;
+  int i = 0, j = 0;
+  while (i < nums.size()) {
+    if (nums[i] == 0 && j <= i) break;
+    j = max(j, i + nums[i]);
+    if (j > nums.size()) f = true;
+    ++i;
+  }
+  return f;
+}
+
+
+int set5::jump_game_ii_q55(vector<int>& nums) {
+  if (nums.size() == 1) { return 0; }
+  int ret = 0, i = 0; 
+  while (i < nums.size()) {
+    if (i + nums[i] >= nums.size() - 1) return ret + 1;
+    int to = i, r = i;
+    for (int j = 1; j < nums[i] + 1; ++j) { 
+      if (r < i + j + nums[i + j]) { 
+        to = i + j;
+        r = i + j + nums[i + j];
+      }
+    }
+    i = to;
+    ret++;
+  }
+  return ret;
+}
+
+
+vector<int> set5::partition_labels_q763(string s) {
+  vector<int> ret;
+  unordered_map<char, int> data;
+  for (int i = 0; i < s.size(); ++i) { data[s[i]] = i; }
+  int t, cnt;
+  for (int i = 0; i < s.size(); ++i) {
+    auto iter = data.find(s[i]);
+    t = max(t, iter->second);
+    cnt++;
+    if (i == t) {
+      ret.push_back(cnt);
+      cnt = 0;
+    }
+  }
+  return ret;
+}
+
 
 } /* namespace leetcode */
