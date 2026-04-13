@@ -7,7 +7,9 @@ Copyrights:
 
 ### algo - algorithms
 
-includes leetcode hot 100 problems
+includes:
+  1. hot questions on leetcode
+  2. past writing test
 
 ### ds - data structure
 
@@ -15,12 +17,14 @@ includes the data structures that are implemented by myself
 
 ### net - network
 
-include asio architecture
+includes:
+  1. asio architecture based proactive asynchronous net io
 
 ### db - database
 
+
+
 ### io - input/output
 
-include:
- 1. cereal architecture based serialization and deserialization methods
-
+includes:
+  1. serdes - cereal architecture based serialization and deserialization lib

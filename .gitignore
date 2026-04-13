@@ -3,3 +3,6 @@ build
 test
 
 .DS_Store
+
+asio-master/
+leveldb-main/
