@@ -3,7 +3,7 @@
 
 /* a^b mod p */
 inline int exp(int a, int b, int p) {
-  int res;
+  int res = 1;
   a %= p;
   while (b) {
     if (b & 1) res = res * a % p;
